@@ -9,12 +9,12 @@ class EventSourcer():
     def add(self, num: int):
         self.undo_stack.append(-1*num)
         self.value += num
-        self._delete_future()
+        self._delete_last_redo()
 
     def subtract(self, num: int):
         self.undo_stack.append(num)
         self.value -= num
-        self._delete_future()
+        self._delete_last_redo()
 
     def undo(self):
         if len(self.undo_stack) == 0:
@@ -37,6 +37,6 @@ class EventSourcer():
         for step in range(steps):
             self.redo()
 
-    def _delete_future(self):
+    def _delete_last_redo(self):
         if len(self.redo_stack) != 0:
             self.redo_stack.pop()
